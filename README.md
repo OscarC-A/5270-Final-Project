@@ -110,25 +110,6 @@ flight-value-checker/
 
 The ranking pipeline uses vectorized pandas operations rather than Python row loops. Route filtering uses boolean masks, aggregation uses `groupby`, and top-N ranking uses `nsmallest`, which avoids fully sorting more data than necessary for individual flight ranking. For larger BTS files, consider loading only needed columns, saving cleaned data as Parquet, and using categorical dtypes for airport and airline columns.
 
-## Git workflow
-
-Suggested milestones:
-
-```bash
-git checkout -b setup-package
-git add pyproject.toml README.md src tests scripts
-git commit -m "Set up installable flight checker package"
-
-git checkout -b data-pipeline
-git commit -m "Add ingestion and cleaning pipeline"
-
-git checkout -b ranking-visuals
-git commit -m "Add route ranking and HTML visualizations"
-
-git checkout -b tests-docs
-git commit -m "Add tests, documentation, and final report instructions"
-```
-
 ## Minimum viable project
 
 A strong MVP is:

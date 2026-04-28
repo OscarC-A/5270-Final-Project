@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flight-value-checker"
+version = "0.1.0"
+description = "A reproducible flight value and reliability checker using real flight performance data."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Enrique Bermudez, Oscar Calamari Abrams, Bastian Krueger, Jackson Douglas," }
+]
+dependencies = [
+  "pandas>=2.0",
+  "plotly>=5.18",
+  "beautifulsoup4>=4.12"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.5"
+]
+
+[project.scripts]
+flight-checker = "flight_value_checker.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--cov=flight_value_checker --cov-report=term-missing --cov-fail-under=80"
+
+[tool.coverage.run]
+branch = true
+source = ["flight_value_checker"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
