@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Flight Value Checker: JFK to LAX</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.45; }
+    h1, h2 { color: #1f2937; }
+    .note { color: #4b5563; }
+    .ranking-table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    .ranking-table th, .ranking-table td { border: 1px solid #d1d5db; padding: 0.45rem; }
+    .ranking-table th { background: #f3f4f6; }
+  </style>
+</head>
+<body>
+  <h1>Flight Value Checker: JFK to LAX</h1>
+  <p class="note">Source: BTS On-Time Performance data or user-provided flight dataset.</p>
+  <h2>Ranked Route Options</h2>
+  <table border="1" class="dataframe ranking-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>origin</th>
+      <th>destination</th>
+      <th>airline</th>
+      <th>avg_duration_min</th>
+      <th>avg_arr_delay_min</th>
+      <th>avg_positive_arr_delay_min</th>
+      <th>on_time_rate</th>
+      <th>sample_size</th>
+      <th>value_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>JFK</td>
+      <td>LAX</td>
+      <td>AA</td>
+      <td>369.484</td>
+      <td>-4.593</td>
+      <td>16.080</td>
+      <td>0.811</td>
+      <td>275</td>
+      <td>0.250</td>
+    </tr>
+    <tr>
+      <td>JFK</td>
+      <td>LAX</td>
+      <td>F9</td>
+      <td>363.161</td>
+      <td>17.290</td>
+      <td>22.484</td>
+      <td>0.677</td>
+      <td>31</td>
+      <td>0.388</td>
+    </tr>
+    <tr>
+      <td>JFK</td>
+      <td>LAX</td>
+      <td>B6</td>
+      <td>367.112</td>
+      <td>11.767</td>
+      <td>25.160</td>
+      <td>0.712</td>
+      <td>313</td>
+      <td>0.706</td>
+    </tr>
+    <tr>
+      <td>JFK</td>
+      <td>LAX</td>
+      <td>DL</td>
+      <td>374.534</td>
+      <td>10.223</td>
+      <td>23.053</td>
+      <td>0.746</td>
+      <td>283</td>
+      <td>0.872</td>
+    </tr>
+  </tbody>
+</table>
+  <h2>Visualizations</h2>
+  <ul>
+    <li><a href="assets/value_score_by_airline.html">Value Score</a></li>
+<li><a href="assets/on_time_rate_by_airline.html">On Time Rate</a></li>
+<li><a href="assets/duration_delay_tradeoff.html">Duration Delay Tradeoff</a></li>
+<li><a href="assets/flight_path_JFK_LAX.html">Flight Path</a></li>
+  </ul>
+  <h2>Interpretation Guide</h2>
+  <p>Lower value score is better. The score balances historical arrival delay, duration, and price when price data is available.</p>
+</body>
+</html>

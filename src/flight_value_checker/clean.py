@@ -5,27 +5,39 @@ from __future__ import annotations
 import pandas as pd
 
 COLUMN_ALIASES = {
+    # date
     "fl_date": "date",
     "flight_date": "date",
+    "flightdate": "date",          # BTS camelCase after lowercasing
     "date": "date",
+    # airline
     "op_unique_carrier": "airline",
     "reporting_airline": "airline",
+    "iata_code_reporting_airline": "airline",  # BTS alternate
     "mkt_unique_carrier": "airline",
     "carrier": "airline",
     "airline": "airline",
+    # airports
     "origin": "origin",
     "origin_airport": "origin",
     "dest": "destination",
     "destination": "destination",
     "destination_airport": "destination",
+    # duration
     "actual_elapsed_time": "duration_min",
+    "actualelapsedtime": "duration_min",       # BTS camelCase after lowercasing
     "crs_elapsed_time": "duration_min",
+    "crselapsedtime": "duration_min",          # BTS camelCase after lowercasing
     "elapsed_time": "duration_min",
     "duration_min": "duration_min",
+    # arrival delay
     "arr_delay": "arr_delay_min",
+    "arrdelay": "arr_delay_min",               # BTS camelCase after lowercasing
     "arrival_delay": "arr_delay_min",
     "arr_delay_min": "arr_delay_min",
+    # departure delay
     "dep_delay": "dep_delay_min",
+    "depdelay": "dep_delay_min",               # BTS camelCase after lowercasing
     "departure_delay": "dep_delay_min",
     "dep_delay_min": "dep_delay_min",
     "distance": "distance_miles",
@@ -46,6 +58,9 @@ def standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
     renamed = df.copy()
     renamed.columns = [str(col).strip().lower() for col in renamed.columns]
     renamed = renamed.rename(columns={col: COLUMN_ALIASES[col] for col in renamed.columns if col in COLUMN_ALIASES})
+    # Multiple source columns can map to the same target (e.g. both Reporting_Airline
+    # and IATA_CODE_Reporting_Airline → airline). Keep the first occurrence.
+    renamed = renamed.loc[:, ~renamed.columns.duplicated()]
     return renamed
 
 

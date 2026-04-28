@@ -214,6 +214,85 @@ def plot_live_flights(
     return out_path
 
 
+def plot_route_options(
+    routes: pd.DataFrame,
+    airports: pd.DataFrame,
+    output_dir: str | Path,
+    origin: str,
+    destination: str,
+    top_n: int = 8,
+) -> Path:
+    """Plot up to ``top_n`` itineraries (direct + connections) on a single map.
+
+    Each route is drawn as a coloured polyline through its sequence of airports.
+    Compatible with the output of :func:`flight_value_checker.rank.find_connecting_routes`.
+    """
+    if routes.empty:
+        raise ValueError("Cannot plot empty route options.")
+
+    output = Path(output_dir)
+    output.mkdir(parents=True, exist_ok=True)
+
+    selected = routes.head(top_n)
+    palette = px.colors.qualitative.Plotly
+
+    all_codes: set[str] = set()
+    for path in selected["path"]:
+        all_codes.update(path)
+    coords = {code: _lookup_airport(airports, code) for code in all_codes}
+
+    fig = go.Figure()
+
+    for i, row in selected.reset_index(drop=True).iterrows():
+        path = row["path"]
+        n_stops = int(row["n_stops"])
+        suffix = "direct" if n_stops == 0 else f"{n_stops} stop{'s' if n_stops > 1 else ''}"
+        label = f"{' → '.join(path)} ({suffix})"
+        fig.add_trace(
+            go.Scattergeo(
+                lon=[coords[c]["lon"] for c in path],
+                lat=[coords[c]["lat"] for c in path],
+                mode="lines",
+                line={"width": 2.5, "color": palette[i % len(palette)]},
+                name=label,
+                opacity=0.85,
+            )
+        )
+
+    sorted_codes = sorted(all_codes)
+    fig.add_trace(
+        go.Scattergeo(
+            lon=[coords[c]["lon"] for c in sorted_codes],
+            lat=[coords[c]["lat"] for c in sorted_codes],
+            mode="markers+text",
+            marker={"size": 8, "color": "#dc2626"},
+            text=sorted_codes,
+            textposition="top center",
+            showlegend=False,
+            hovertext=[coords[c]["name"] for c in sorted_codes],
+        )
+    )
+
+    fig.update_layout(
+        title=f"Route Options: {origin} → {destination}",
+        geo={
+            "projection_type": "natural earth",
+            "showland": True,
+            "landcolor": "#e5e7eb",
+            "showocean": True,
+            "oceancolor": "#dbeafe",
+            "showcountries": True,
+            "countrycolor": "#9ca3af",
+            "showcoastlines": True,
+        },
+        margin={"l": 0, "r": 0, "t": 40, "b": 0},
+    )
+
+    out_path = output / f"route_options_{origin}_{destination}.html"
+    fig.write_html(out_path, include_plotlyjs="cdn")
+    return out_path
+
+
 def create_visualizations(ranked_options: pd.DataFrame, output_dir: str | Path) -> dict[str, Path]:
     """Create Plotly HTML visualizations and return their file paths."""
     if ranked_options.empty:

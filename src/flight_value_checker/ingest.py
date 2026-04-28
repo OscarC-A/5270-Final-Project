@@ -40,7 +40,7 @@ def load_flight_data(path: str | Path) -> pd.DataFrame:
 
     suffix = file_path.suffix.lower()
     if suffix == ".csv":
-        return pd.read_csv(file_path)
+        return pd.read_csv(file_path, low_memory=False)
     if suffix == ".parquet":
         return pd.read_parquet(file_path)
 

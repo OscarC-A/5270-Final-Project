@@ -15,7 +15,7 @@ Why BTS:
 - It contains real U.S. flight observations, delays, cancellations, carriers, airports, dates, and elapsed times.
 - It avoids fragile scraping of JavaScript-heavy travel sites.
 
-Optional extension: add an Amadeus API adapter later for live price quotes. The core project does not require this, because API keys and quotas can make final grading less reproducible.
+Optional extension: add an Amadeus API adapter later for live price quotes. The core project does not use this, because API keys and quotas can be a headache.
 
 ## Install
 
