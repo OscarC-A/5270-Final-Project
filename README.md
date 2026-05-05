@@ -8,7 +8,7 @@ The goal is to build a reproducible "flight checker" that helps compare route op
 
 ## Dataset strategy
 
-Recommended final dataset: Bureau of Transportation Statistics (BTS) Reporting Carrier On-Time Performance data.
+Recommended final dataset: [Bureau of Transportation Statistics (BTS) Reporting Carrier On-Time Performance data](https://transtats.bts.gov/DatabaseInfo.asp?QO_VQ=EFD&DB_URL=).
 
 Why BTS:
 - It is a legitimate public flight dataset.
