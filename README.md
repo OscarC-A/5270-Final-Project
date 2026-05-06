@@ -1,6 +1,6 @@
-# Flight Value Checker
+# Flight Value Checker (ORIE 5270 Final Project)
 
-A GitHub-ready ORIE 5270 computational project that ranks flight options using real flight performance data. The package ingests flight data, cleans it into a standard schema, ranks route/carrier options, creates interactive HTML charts, and builds a final HTML report.
+A project that ranks flight options using real flight performance data. The package ingests flight data, cleans it into a standard schema, ranks route/carrier options, creates interactive HTML charts, and builds a final HTML report.
 
 ## Project purpose
 
@@ -109,16 +109,3 @@ flight-value-checker/
 ## Performance notes
 
 The ranking pipeline uses vectorized pandas operations rather than Python row loops. Route filtering uses boolean masks, aggregation uses `groupby`, and top-N ranking uses `nsmallest`, which avoids fully sorting more data than necessary for individual flight ranking. For larger BTS files, consider loading only needed columns, saving cleaned data as Parquet, and using categorical dtypes for airport and airline columns.
-
-## Minimum viable project
-
-A strong MVP is:
-
-1. Installable package with `pip install -e ".[dev]"`.
-2. BTS CSV ingestion.
-3. Cleaning and route filtering.
-4. Carrier ranking for one route, such as JFK to LAX.
-5. Three Plotly HTML visualizations.
-6. Final `docs/report.html`.
-7. Unit tests above 80% coverage.
-8. README with install, run, data, and interpretation instructions.
